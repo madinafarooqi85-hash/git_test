@@ -1,0 +1,133 @@
+"Opave: Installér en Webserver i Docker og Test at den Virker
+I dette projekt lærer vi følgende:
+• Hvad Docker er
+• Hvordan man installerer Docker på Linux
+• Hvordan man kører en webserver i en Docker-container
+• Hvordan man tester webserveren
+• Hvordan man fejlsøger containere
+Scenarie
+En gruppe af studerende ønsker at publicere en simpel hjemmeside.
+Du som studerende står for det følgende:
+1. Installere Docker på Ubuntu.
+2. Starte en webserver i Docker.
+3. Oprette en hjemmeside.
+4. Publicere hjemmesiden.
+5. Dokumentere løsningen.
+Klargøring af Linux
+Opdater systemet: sudo apt update og sudo apt upgrade -y
+Kontroller systeminformation: hostnamectl
+Kontroller IP-adresse: ip a
+ Installér Docker
+Installer Docker: curl -fsSL https://get.docker.com | sh
+Kontroller installation: docker version
+Forventet output:
+Client:
+Server:
+Test Docker: docker run hello-world
+Hvis der vises:
+Hello from Docker!
+så fungerer Docker korrekt.
+ Hent Webserver Image
+Download Nginx: docker pull nginx
+Vis images: docker images
+Resultat: REPOSITORY TAG
+nginx latest
+Start Webserver
+Start containeren: docker run -d </span>
+--name webserver </span>
+-p 80:80 </span>
+nginx
+Forklaring:
+Parameter Forklaring
+-d Kør i baggrunden
+--name Containernavn
+-p 80:80 Port forwarding
+nginx Image
+Kontroller Container
+Vis kørende containere:
+docker ps
+Forventet: webserver
+Up80/tcp
+Del 6 – Test Hjemmesiden
+Fra Linux:
+curl localhost
+Eller browser:
+http://SERVER-IP
+Hvis alt virker ses:
+Welcome to nginx!
+Opret Egen Hjemmeside
+Opret mappe: mkdir website
+cd website
+Opret fl: nano index.html
+Indsæt:
+<!DOCTYPE html>
+<html>
+<head>
+<title>Min Docker Side</title>
+</head>
+<body>
+<h1>Velkommen til Docker</h1></body>
+</html>
+Gem flen.
+ Kopier Hjemmesiden ind i Containeren
+Find container:
+docker ps
+Kopiér fl: docker cp index.html webserver:/usr/share/nginx/html/
+Test igen
+Åbn browser:
+http://SERVER-IP
+Nu skal hjemmesiden vise:
+Velkommen til Docker
+Denne hjemmeside kører i en Docker container
+Fejlsøgning
+Se logs: docker logs webserver
+Se processer: docker top webserver
+Gå ind i containeren: docker exec -it webserver bash
+Se hjemmesiden:
+cd /usr/share/nginx/html
+ls
+cat index.htmlDe studerende skal dokumentere:
+1. Linux-installation
+Screenshot af:
+hostnamectl
+2. Docker Installation
+Screenshot af:
+docker version
+3. Container
+Screenshot af:
+docker ps
+4. Hjemmeside
+Screenshot af browseren.
+Refeksionsspørgsmål
+1. Hvad er Docker?
+2. Hvad er en container?
+3. Hvad er forskellen på Docker og en VM?
+4. Hvorfor bruger man images?
+5. Hvad bruges port mapping til?
+6. Hvorfor skal containeren eksponere port 80?
+7. Hvordan stopper man en container?
+8. Hvordan starter man en container igen?
+9. Hvad bruges docker logs til?
+10. Hvad bruges docker exec til?
+Praktisk EksamenPraktisk Eksamen
+Opgave
+I skal uden hjælp:
+1. Installere Docker.
+2. Downloade Nginx.
+3. Starte en container.
+4. Publicere en hjemmeside.
+5. Dokumentere løsningen.
+6. Demonstrere siden i browseren.
+Ekstraopgave (For de Hurtige)
+Tilføj:
+• CSS design
+• Flere HTML sider
+• Firma logo
+• Kontakt side
+• Docker Volume til hjemmesiden
+Eksempel:
+docker run -d </span>
+--name webserver </span>
+-p 80:80 </span>
+-v $(pwd):/usr/share/nginx/html </span>
+nginx"""
